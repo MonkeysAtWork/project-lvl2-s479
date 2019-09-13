@@ -29,3 +29,11 @@ $ gendiff [options] <firstConfig> <secondConfig>
 [![asciicast](https://asciinema.org/a/EcXry65YD6NZxX6G6mTYCLz0H.svg)](https://asciinema.org/a/EcXry65YD6NZxX6G6mTYCLz0H)
 ### Usage
 [![asciicast](https://asciinema.org/a/i1CVgOtaYsDjYAOiSxxpkNLpU.svg)](https://asciinema.org/a/i1CVgOtaYsDjYAOiSxxpkNLpU)
+
+
+## step4 ini
+
+### Setup
+[![asciicast](https://asciinema.org/a/hAAtvmWn4RG6ixOyOQzt916Ux.svg)](https://asciinema.org/a/hAAtvmWn4RG6ixOyOQzt916Ux)
+### Usage
+[![asciicast](https://asciinema.org/a/4wXFxZrW1QUJUevhl48RhC9at.svg)](https://asciinema.org/a/4wXFxZrW1QUJUevhl48RhC9at)

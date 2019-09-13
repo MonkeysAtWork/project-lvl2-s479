@@ -2,18 +2,19 @@ import fs from 'fs';
 import path from 'path';
 import genDiff from '../src';
 
-test('JSON', () => {
-  const pathToFile1 = path.join(__dirname, '/__fixtures__/json/before.json');
-  const pathToFile2 = path.join(__dirname, '/__fixtures__/json/after.json');
-  const pathToResult = path.join(__dirname, '/__fixtures__/result.txt');
-  const result = fs.readFileSync(pathToResult, 'utf8');
-  expect(genDiff(pathToFile1, pathToFile2)).toEqual(result);
-});
+const makePathToFile = (pathFromDirToFile) => path.join(__dirname, pathFromDirToFile);
 
-test('YAML', () => {
-  const pathToFile1 = path.join(__dirname, '/__fixtures__/yaml/before.yml');
-  const pathToFile2 = path.join(__dirname, '/__fixtures__/yaml/after.yml');
-  const pathToResult = path.join(__dirname, '/__fixtures__/result.txt');
-  const result = fs.readFileSync(pathToResult, 'utf8');
+const jsonPath = [makePathToFile('/__fixtures__/json/before.json'),
+  makePathToFile('/__fixtures__/json/after.json')];
+const yamlPath = [makePathToFile('/__fixtures__/yaml/before.yml'),
+  makePathToFile('/__fixtures__/yaml/after.yml')];
+const iniPath = [makePathToFile('/__fixtures__/ini/before.ini'),
+  makePathToFile('/__fixtures__/ini/after.ini')];
+const pathToResult = makePathToFile('/__fixtures__/result.txt');
+
+const result = fs.readFileSync(pathToResult, 'utf8');
+
+
+test.each([jsonPath, yamlPath, iniPath])('flat %#', (pathToFile1, pathToFile2) => {
   expect(genDiff(pathToFile1, pathToFile2)).toEqual(result);
 });
