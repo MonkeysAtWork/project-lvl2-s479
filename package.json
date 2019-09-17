@@ -1,6 +1,6 @@
 {
   "name": "ssh-project2-gendiff",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "educational project, get difference between two files",
   "main": "dist/index.js",
   "bin": {

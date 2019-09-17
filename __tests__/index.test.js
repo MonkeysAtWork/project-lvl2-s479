@@ -1,20 +1,34 @@
 import fs from 'fs';
 import path from 'path';
+
 import genDiff from '../src';
 
 const makePathToFile = (pathFromDirToFile) => path.join(__dirname, pathFromDirToFile);
-
-const jsonPath = [makePathToFile('/__fixtures__/json/before.json'),
-  makePathToFile('/__fixtures__/json/after.json')];
-const yamlPath = [makePathToFile('/__fixtures__/yaml/before.yml'),
-  makePathToFile('/__fixtures__/yaml/after.yml')];
-const iniPath = [makePathToFile('/__fixtures__/ini/before.ini'),
-  makePathToFile('/__fixtures__/ini/after.ini')];
-const pathToResult = makePathToFile('/__fixtures__/result.txt');
-
-const result = fs.readFileSync(pathToResult, 'utf8');
+const genPathToFiles = (format, folder = 'flat') => [makePathToFile(`/__fixtures__/${folder}/before.${format}`),
+  makePathToFile(`/__fixtures__/${folder}/after.${format}`)];
+const getResult = (pathToFile) => fs.readFileSync(pathToFile, 'utf8');
 
 
-test.each([jsonPath, yamlPath, iniPath])('flat %#', (pathToFile1, pathToFile2) => {
-  expect(genDiff(pathToFile1, pathToFile2)).toEqual(result);
+describe('genDiff1', () => {
+  const pathToFlatResult = makePathToFile('/__fixtures__/flat/result.txt');
+  const pathToFlatExpects = [genPathToFiles('json'), genPathToFiles('yml'), genPathToFiles('ini')];
+  const result = getResult(pathToFlatResult);
+
+  describe.each(pathToFlatExpects)('flat', (pathToFile1, pathToFile2) => {
+    test(path.extname(pathToFile1), () => {
+      expect(genDiff(pathToFile1, pathToFile2)).toEqual(result);
+    });
+  });
+});
+
+describe('genDiff2', () => {
+  const pathToTreeResult = makePathToFile('/__fixtures__/tree/result.txt');
+  const pathToTreeExpects = [genPathToFiles('json', 'tree'), genPathToFiles('yml', 'tree'), genPathToFiles('ini', 'tree')];
+  const result = getResult(pathToTreeResult);
+
+  describe.each(pathToTreeExpects)('tree', (pathToFile1, pathToFile2) => {
+    test(path.extname(pathToFile1), () => {
+      expect(genDiff(pathToFile1, pathToFile2)).toEqual(result);
+    });
+  });
 });
