@@ -57,3 +57,13 @@ $ gendiff [options] <firstConfig> <secondConfig>
 [![asciicast](https://asciinema.org/a/HfodkxXK7K8teEz0clcy97Kn8.svg)](https://asciinema.org/a/HfodkxXK7K8teEz0clcy97Kn8)
 ### Usage
 [![asciicast](https://asciinema.org/a/Bi1f9fFohzdRuZT97RBvKIl8T.svg)](https://asciinema.org/a/Bi1f9fFohzdRuZT97RBvKIl8T)
+
+
+
+
+## step6 plain formatter
+
+### Setup
+[![asciicast](https://asciinema.org/a/LiQutKAVYMeuELWJTt3TZydzN.svg)](https://asciinema.org/a/LiQutKAVYMeuELWJTt3TZydzN)
+### Usage
+[![asciicast](https://asciinema.org/a/Y3R7cXehpROtUrVpWRIL9mNY6.svg)](https://asciinema.org/a/Y3R7cXehpROtUrVpWRIL9mNY6)
