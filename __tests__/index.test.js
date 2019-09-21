@@ -3,6 +3,7 @@ import path from 'path';
 
 import genDiff from '../src';
 
+
 const makePathToFile = (pathFromDirToFile) => path.join(__dirname, pathFromDirToFile);
 const genPathToFiles = (format, folder = 'flat') => [makePathToFile(`/__fixtures__/${folder}/before.${format}`),
   makePathToFile(`/__fixtures__/${folder}/after.${format}`)];
@@ -21,19 +22,18 @@ describe('flat', () => {
   });
 });
 
+
 describe('tree', () => {
   const pathToTreeExpects = [genPathToFiles('json', 'tree'), genPathToFiles('yml', 'tree'), genPathToFiles('ini', 'tree')];
 
-  describe.each(pathToTreeExpects)('recursive', (pathToFile1, pathToFile2) => {
-    test(path.extname(pathToFile1), () => {
-      const pathToTreeResult = makePathToFile('/__fixtures__/tree/result.txt');
+  describe.each(pathToTreeExpects)('formatters', (pathToFile1, pathToFile2) => {
+    test(`${path.extname(pathToFile1)} recursive`, () => {
+      const pathToTreeResult = makePathToFile('/__fixtures__/tree/recursive_result.txt');
       const result = getResult(pathToTreeResult);
       expect(genDiff(pathToFile1, pathToFile2, 'recursive')).toEqual(result);
     });
-  });
 
-  describe.each(pathToTreeExpects)('plain', (pathToFile1, pathToFile2) => {
-    test(path.extname(pathToFile1), () => {
+    test(`${path.extname(pathToFile1)} plain`, () => {
       const pathToTreeResult = makePathToFile('/__fixtures__/tree/plain_result.txt');
       const result = getResult(pathToTreeResult);
       expect(genDiff(pathToFile1, pathToFile2, 'plain')).toEqual(result);
