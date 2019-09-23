@@ -1,53 +1,36 @@
 import _ from 'lodash';
 
-const buildValue = (data) => {
+
+const getIndent = (nestingLevel) => {
+  const spacesPerLevel = 4;
+
+  return ' '.repeat(nestingLevel * spacesPerLevel);
+};
+
+const stringify = (data, level) => {
+  const indent = getIndent(level);
   if (_.isObject(data)) {
     const [[key, value]] = Object.entries(data);
-    return [{ key: `  ${key}`, value: buildValue(value) }];
+    return `{\n${indent}    ${key}: ${value}\n${indent}}`;
   }
   return data;
 };
 
-
-const buildStructure = (ast) => ast.reduce((acc, node) => {
-  const {
-    type, key, children, valueBefore, valueAfter,
-  } = node;
-  switch (type) {
-    case ('propertyGroupe'):
-      return [...acc, { key: `  ${key}`, value: buildStructure(children) }];
-    case ('changedProperty'):
-      return [...acc, { key: `- ${key}`, value: buildValue(valueBefore) },
-        { key: `+ ${key}`, value: buildValue(valueAfter) }];
-    case ('sameProperty'):
-      return [...acc, { key: `  ${key}`, value: buildValue(valueAfter) }];
-    case ('deletedProperty'):
-      return [...acc, { key: `- ${key}`, value: buildValue(valueBefore) }];
-    case ('addedProperty'):
-      return [...acc, { key: `+ ${key}`, value: buildValue(valueAfter) }];
-    default:
-      return null;
-  }
-}, []);
-
-
-const getIndent = (level) => {
-  const spacesPerLevel = 4;
-
-  return ' '.repeat(level * spacesPerLevel);
+const typesActions = {
+  propertyGroupe: (key, value, level, fn) => `    ${key}: ${fn(value, level + 1)}`,
+  changedProperty: (key, value, level) => [`  - ${key}: ${stringify(value.oldValue, level + 1)}`, `  + ${key}: ${stringify(value.newValue, level + 1)}`],
+  sameProperty: (key, value, level) => `    ${key}: ${stringify(value, level + 1)}`,
+  deletedProperty: (key, value, level) => `  - ${key}: ${stringify(value, level + 1)}`,
+  addedProperty: (key, value, level) => `  + ${key}: ${stringify(value, level + 1)}`,
 };
 
-const makeAsString = (ast, level = 0) => {
+
+const render = (data, level = 0) => {
   const indent = getIndent(level);
-
-  const func = ({ key, value }) => {
-    const newValue = _.isObject(value) ? makeAsString(value, level + 1) : value;
-    return `${indent}  ${key}: ${newValue}`;
-  };
-  return `{\n${ast.map(func).join('\n')}\n${indent}}`;
+  const mapped = data.map(({ type, key, value }) => (
+    typesActions[type](key, value, level, render)));
+  return `{\n${indent}${(_.flatten(mapped).join(`\n${indent}`))}\n${indent}}`;
 };
 
-export default (diff) => {
-  const structure = buildStructure(diff);
-  return makeAsString(structure);
-};
+
+export default render;

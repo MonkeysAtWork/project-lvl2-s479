@@ -24,9 +24,9 @@ $ gendiff [options] <firstConfig> <secondConfig>
 ## step2 JSON
 
 ### Setup
-[![asciicast](https://asciinema.org/a/L4Lba4wUekN6C9VFedu1bIVl4.svg)](https://asciinema.org/a/L4Lba4wUekN6C9VFedu1bIVl4)
+[![asciicast](https://asciinema.org/a/urEeZSi5RoJVHKo3bkVfkTCT3.svg)](https://asciinema.org/a/urEeZSi5RoJVHKo3bkVfkTCT3)
 ### Usage
-[![asciicast](https://asciinema.org/a/slZH4d8iqfnKjc3J9jBcnJrxi.svg)](https://asciinema.org/a/slZH4d8iqfnKjc3J9jBcnJrxi)
+[![asciicast](https://asciinema.org/a/lAKKP3ToCeHePDEcjF7jyyyBq.svg)](https://asciinema.org/a/lAKKP3ToCeHePDEcjF7jyyyBq)
 
 
 
@@ -34,9 +34,9 @@ $ gendiff [options] <firstConfig> <secondConfig>
 ## step3 YAML
 
 ### Setup
-[![asciicast](https://asciinema.org/a/EcXry65YD6NZxX6G6mTYCLz0H.svg)](https://asciinema.org/a/EcXry65YD6NZxX6G6mTYCLz0H)
+[![asciicast](https://asciinema.org/a/1WAnM1H9U44jq9xXDYxhRUSGl.svg)](https://asciinema.org/a/1WAnM1H9U44jq9xXDYxhRUSGl)
 ### Usage
-[![asciicast](https://asciinema.org/a/i1CVgOtaYsDjYAOiSxxpkNLpU.svg)](https://asciinema.org/a/i1CVgOtaYsDjYAOiSxxpkNLpU)
+[![asciicast](https://asciinema.org/a/3btWDTOtmVufW3llpKowrhpRY.svg)](https://asciinema.org/a/3btWDTOtmVufW3llpKowrhpRY)
 
 
 
@@ -44,9 +44,9 @@ $ gendiff [options] <firstConfig> <secondConfig>
 ## step4 ini
 
 ### Setup
-[![asciicast](https://asciinema.org/a/hAAtvmWn4RG6ixOyOQzt916Ux.svg)](https://asciinema.org/a/hAAtvmWn4RG6ixOyOQzt916Ux)
+[![asciicast](https://asciinema.org/a/p9IRFcHBVwWGwijbxZxSG9ZOw.svg)](https://asciinema.org/a/p9IRFcHBVwWGwijbxZxSG9ZOw)
 ### Usage
-[![asciicast](https://asciinema.org/a/4wXFxZrW1QUJUevhl48RhC9at.svg)](https://asciinema.org/a/4wXFxZrW1QUJUevhl48RhC9at)
+[![asciicast](https://asciinema.org/a/9Ns92YyUNKV1nSiNLoaK9DQbe.svg)](https://asciinema.org/a/9Ns92YyUNKV1nSiNLoaK9DQbe)
 
 
 

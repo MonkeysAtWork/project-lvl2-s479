@@ -11,10 +11,13 @@ build:
 test:
 	npm test
 
+watchAll:
+	npm run watchAll	
+
 lint:
 	npx eslint .
 
-publish:
+local:
 	npm publish --dry-run
 
 .PHONY: test

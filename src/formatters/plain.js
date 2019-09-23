@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const makeValue = (value) => {
+const adaptValue = (value) => {
   if (_.isObject(value)) {
     return '[complex value]';
   }
@@ -10,27 +10,28 @@ const makeValue = (value) => {
   return value;
 };
 
-const renderPlain = (ast, path = []) => ast.map((node) => {
-  const {
-    type, key, children, valueBefore, valueAfter,
-  } = node;
-
-  const newPath = [...path, key];
-
-  switch (type) {
-    case ('propertyGroupe'):
-      return _.flatten(renderPlain(children, newPath));
-    case ('changedProperty'):
-      return `Property '${newPath.join('.')}' was updated. From ${makeValue(valueBefore)} to ${makeValue(valueAfter)}`;
-    case ('deletedProperty'):
-      return `Property '${newPath.join('.')}' was removed`;
-    case ('addedProperty'):
-      return `Property '${newPath.join('.')}' was added with value: ${makeValue(valueAfter)}`;
-    default:
-      return null;
+const stringify = (data) => {
+  if (_.isObject(data)) {
+    const [[key, value]] = Object.entries(data);
+    return `{${key}: ${value}}`;
   }
+  return adaptValue(data);
+};
+
+const typesActions = {
+  propertyGroupe: (path, value, fn) => fn(value, path),
+  changedProperty: (path, value) => `Property '${path.join('.')}' was updated. From ${stringify(value.oldValue)} to ${adaptValue(value.newValue)}`,
+  deletedProperty: (path) => `Property '${path.join('.')}' was removed`,
+  addedProperty: (path, value) => `Property '${path.join('.')}' was added with value: ${adaptValue(value)}`,
+  sameProperty: () => null,
+};
+
+
+const makePropertyList = (data, path = []) => data.map(({ type, key, value }) => {
+  const newPath = [...path, key];
+  return typesActions[type](newPath, value, makePropertyList);
 });
 
-export default (ast) => _.flatten(renderPlain(ast))
+export default (ast) => _.flattenDeep(makePropertyList(ast))
   .filter((e) => e)
   .join('\n');
