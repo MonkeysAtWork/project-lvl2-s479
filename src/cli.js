@@ -1,6 +1,7 @@
 import commander from 'commander';
 import genDiff from '.';
 
+
 export default function () {
   commander
     .version('0.1.0')

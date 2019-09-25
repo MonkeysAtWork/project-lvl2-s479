@@ -1,5 +1,6 @@
 import _ from 'lodash';
 
+
 const adaptValue = (value) => {
   if (_.isObject(value)) {
     return '[complex value]';
@@ -7,30 +8,36 @@ const adaptValue = (value) => {
   if (typeof value === 'string') {
     return `'${value}'`;
   }
+
   return value;
 };
+
 
 const stringify = (data) => {
   if (_.isObject(data)) {
     const [[key, value]] = Object.entries(data);
     return `{${key}: ${value}}`;
   }
+
   return adaptValue(data);
 };
 
+
+const makePath = (path, newElement) => path.concat(newElement);
+
+
 const typesActions = {
-  propertyGroupe: (path, value, fn) => fn(value, path),
-  changedProperty: (path, value) => `Property '${path.join('.')}' was updated. From ${stringify(value.oldValue)} to ${adaptValue(value.newValue)}`,
-  deletedProperty: (path) => `Property '${path.join('.')}' was removed`,
-  addedProperty: (path, value) => `Property '${path.join('.')}' was added with value: ${adaptValue(value)}`,
+  propertyGroupe: (node, fn) => fn(node.children, makePath(node.path, node.key)),
+  changedProperty: (node) => `Property '${makePath(node.path, node.key).join('.')}' was updated. From ${stringify(node.oldValue)} to ${adaptValue(node.newValue)}`,
+  deletedProperty: (node) => `Property '${makePath(node.path, node.key).join('.')}' was removed`,
+  addedProperty: (node) => `Property '${makePath(node.path, node.key).join('.')}' was added with value: ${adaptValue(node.newValue)}`,
   sameProperty: () => null,
 };
 
 
-const makePropertyList = (data, path = []) => data.map(({ type, key, value }) => {
-  const newPath = [...path, key];
-  return typesActions[type](newPath, value, makePropertyList);
-});
+const makePropertyList = (data, path = []) => data.map((node) => (
+  typesActions[node.type]({ ...node, path }, makePropertyList)));
+
 
 export default (ast) => _.flattenDeep(makePropertyList(ast))
   .filter((e) => e)

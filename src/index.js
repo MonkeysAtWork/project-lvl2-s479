@@ -13,6 +13,7 @@ const getDataFromFile = (filePath, fileContent) => {
   return parse(fileContent);
 };
 
+
 export default (filePath1, filePath2, format) => {
   const fileContent1 = fs.readFileSync(filePath1, 'utf8');
   const fileContent2 = fs.readFileSync(filePath2, 'utf8');
